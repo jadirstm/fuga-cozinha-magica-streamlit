@@ -1,37 +1,34 @@
 import streamlit as st
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
+import os
 
-# ------------------------------
-# Cabeçalho
-# ------------------------------
 st.markdown('<p class="main-title">Sala 1: A Pirâmide Alimentar 🏔️</p>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">Descubra o que é essencial para a sua energia!</p>', unsafe_allow_html=True)
 
-# ------------------------------
-# Imagem interativa
-# ------------------------------
-try:
-    piramide = Image.open("assets/piramide.jpg")
-    st.image(piramide, caption="Dica: Olhe a pirâmide!", use_container_width=True)
-except FileNotFoundError:
-    st.warning("Imagem da pirâmide não encontrada.")
+# Imagem da pirâmide
+path = "assets/piramide.jpg"
+piramide = None
+if os.path.exists(path):
+    try:
+        img = Image.open(path)
+        img.verify()
+        piramide = Image.open(path)
+    except (UnidentifiedImageError, IOError):
+        st.warning("⚠️ Imagem da pirâmide inválida. Reexporte como JPG.")
+else:
+    st.warning("⚠️ Imagem da pirâmide não encontrada.")
 
-# ------------------------------
-# Pergunta e opções
-# ------------------------------
+if piramide:
+    st.image(piramide, caption="Dica: Olhe a pirâmide!", use_container_width=True)
+
+# Pergunta
 opcoes = ["Doces e gorduras", "Grãos e pães", "Carnes e ovos"]
 resposta = st.radio("Escolha:", opcoes)
 
-# ------------------------------
-# Botão de verificação
-# ------------------------------
 if st.button("Verificar"):
     if resposta == "Grãos e pães":
         st.success("🎉 Você acertou! Grãos dão energia para correr e brincar!")
         st.session_state.progresso = 1
         st.balloons()
-        if st.button("➡️ Ir para a Sala 2"):
-            st.experimental_set_query_params(page="2_Sala_Frutas")
-            st.experimental_rerun()
     else:
         st.error("❌ Quase! Pense no que dá energia logo de manhã...")
