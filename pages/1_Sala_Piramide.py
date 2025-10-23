@@ -7,19 +7,14 @@ st.markdown('<p class="subtitle">Descubra o que é essencial para a sua energia!
 
 # Imagem da pirâmide
 path = "assets/piramide.jpg"
-piramide = None
 if os.path.exists(path):
     try:
-        img = Image.open(path)
-        img.verify()
-        piramide = Image.open(path)
-    except (UnidentifiedImageError, IOError):
+        piramide = Image.open(path).convert("RGB")
+        st.image(piramide, caption="Dica: Olhe a pirâmide!", use_container_width=True)
+    except (UnidentifiedImageError, OSError):
         st.warning("⚠️ Imagem da pirâmide inválida. Reexporte como JPG.")
 else:
     st.warning("⚠️ Imagem da pirâmide não encontrada.")
-
-if piramide:
-    st.image(piramide, caption="Dica: Olhe a pirâmide!", use_container_width=True)
 
 # Pergunta
 opcoes = ["Doces e gorduras", "Grãos e pães", "Carnes e ovos"]
