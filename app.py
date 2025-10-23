@@ -61,18 +61,14 @@ st.markdown('<p class="subtitle">Ajude o herói a escapar das salas resolvendo e
 # Imagem de fundo segura
 # ------------------------------
 bg_path = "assets/background_escape.jpg"
-bg_image = None
-
 if os.path.exists(bg_path):
     try:
         bg_image = Image.open(bg_path).convert("RGB")
+        st.image(bg_image, caption="A aventura começa aqui!", use_container_width=True)
     except (UnidentifiedImageError, OSError):
         st.warning("⚠️ A imagem de fundo existe, mas não pôde ser aberta. Reexporte como JPG válido.")
 else:
     st.warning("⚠️ Imagem de fundo não encontrada em assets/")
-
-if bg_image is not None:
-    st.image(bg_image, caption="A aventura começa aqui!", use_container_width=True)
 
 # ------------------------------
 # Barra de progresso
@@ -93,7 +89,7 @@ if st.session_state.progresso >= 3:
     st.sidebar.markdown("🏆 Sala Final: Vitória!")
 
 # ------------------------------
-# Botão para iniciar ou avançar
+# Botão para iniciar
 # ------------------------------
 if st.session_state.progresso == 0:
     if st.button("🚪 Começar a aventura"):
