@@ -7,7 +7,7 @@ st.write("Para escapar, responda: O que fica na base da pirâmide (mais importan
 # Imagem interativa
 try:
     piramide = Image.open("assets/piramide_alimentar.jpg")
-    st.image(piramide, caption="Dica: Olhe a pirâmide!", use_column_width=True)
+    st.image(piramide, caption="Dica: Olhe a pirâmide!", use_container_width=True)
 except FileNotFoundError:
     st.write("Imagem da pirâmide não encontrada.")
 
