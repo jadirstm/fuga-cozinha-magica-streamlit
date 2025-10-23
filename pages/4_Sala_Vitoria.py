@@ -8,16 +8,12 @@ st.markdown('<p class="subtitle">Aprendeu: Coma variado, beba água e evite exce
 path = "assets/vitoria.jpg"
 if os.path.exists(path):
     try:
-        vitoria = Image.open(path).convert("RGB")
-        st.image(vitoria, caption="Celebração!", use_container_width=True)
-    except (UnidentifiedImageError, OSError):
-        st.warning("⚠️ Imagem de vitória inválida.")
+        st.image(Image.open(path).convert("RGB"), caption="Celebração!", use_container_width=True)
+    except:
+        st.warning("⚠️ Imagem inválida")
 else:
-    st.warning("⚠️ Imagem de vitória não encontrada.")
+    st.warning("⚠️ Imagem não encontrada")
 
-st.balloons()
-st.info("Resumo: Pirâmide guia, frutas diárias, refeições equilibradas.")
-
-if st.button("🔄 Reiniciar aventura"):
+if st.button("Reiniciar"):
     st.session_state.progresso = 0
     st.experimental_rerun()
