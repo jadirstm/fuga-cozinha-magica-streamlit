@@ -5,7 +5,7 @@ import os
 st.markdown('<p class="main-title">🏆 Parabéns! Você Escapou!</p>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">Aprendeu: Coma variado, beba água e evite excessos!</p>', unsafe_allow_html=True)
 
-path = "assets/imagem_vitoria.jpg"
+path = "assets/vitoria.jpg"
 if os.path.exists(path):
     try:
         vitoria = Image.open(path).convert("RGB")
