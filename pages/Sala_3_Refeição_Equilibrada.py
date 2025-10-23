@@ -7,7 +7,7 @@ st.write("Monte um prato: 1/2 vegetais/frutas, 1/4 grãos, 1/4 proteínas.")
 # Imagem exemplo
 try:
     prato = Image.open("assets/prato_equilibrado.jpg")
-    st.image(prato, caption="Exemplo de prato equilibrado", use_column_width=True)
+    st.image(prato, caption="Exemplo de prato equilibrado", use_container_width=True)
 except:
     st.write("Imagem do prato não encontrada.")
 
