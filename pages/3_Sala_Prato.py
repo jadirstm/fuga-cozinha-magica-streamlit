@@ -7,22 +7,20 @@ st.markdown('<p class="subtitle">Monte um prato equilibrado!</p>', unsafe_allow_
 
 # Imagem do prato
 path = "assets/prato.jpg"
-prato = None
 if os.path.exists(path):
     try:
-        img = Image.open(path)
-        img.verify()
-        prato = Image.open(path)
-    except (UnidentifiedImageError, IOError):
+        prato = Image.open(path).convert("RGB")
+        st.image(prato, caption="Exemplo de prato equilibrado", use_container_width=True)
+    except (UnidentifiedImageError, OSError):
         st.warning("⚠️ Imagem do prato inválida.")
 else:
     st.warning("⚠️ Imagem do prato não encontrada.")
 
-if prato:
-    st.image(prato, caption="Exemplo de prato equilibrado", use_container_width=True)
-
 # Seleção
-componentes = st.multiselect("Adicione:", ["Arroz (grão)", "Frango (proteína)", "Salada (vegetal)", "Maçã (fruta)", "Refrigerante (errado)"])
+componentes = st.multiselect(
+    "Adicione:", 
+    ["Arroz (grão)", "Frango (proteína)", "Salada (vegetal)", "Maçã (fruta)", "Refrigerante (errado)"]
+)
 
 if st.button("Montar"):
     if len(componentes) == 4 and "Refrigerante (errado)" not in componentes:
