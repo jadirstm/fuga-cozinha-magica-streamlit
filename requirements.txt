@@ -3,6 +3,3 @@ pandas
 numpy
 openpyxl
 Pillow
-streamlit-lottie
-requests
-altair
