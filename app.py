@@ -39,7 +39,7 @@ if os.path.exists(bg_path):
         h_size = int(float(bg_image.size[1]) * w_percent)
         bg_image = bg_image.resize((max_width, h_size))
     except (UnidentifiedImageError, OSError):
-        st.warning("⚠️ A imagem de fundo existe, mas não pôde ser aberta.")
+        st.warning("⚠️ A imagem de fundo existe mas não pôde ser aberta.")
 else:
     st.warning("⚠️ Imagem de fundo não encontrada.")
 
