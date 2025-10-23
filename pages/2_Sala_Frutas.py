@@ -14,18 +14,14 @@ imagens = [
 ]
 
 for col, (nome, path) in zip(cols, imagens):
-    img_obj = None
     if os.path.exists(path):
         try:
-            img = Image.open(path)
-            img.verify()
-            img_obj = Image.open(path)
-        except (UnidentifiedImageError, IOError):
+            img_obj = Image.open(path).convert("RGB")
+            col.image(img_obj, caption=nome)
+        except (UnidentifiedImageError, OSError):
             col.write(f"⚠️ Imagem {nome} inválida")
     else:
         col.write(f"⚠️ Imagem {nome} não encontrada")
-    if img_obj:
-        col.image(img_obj, caption=nome)
 
 # Seleção
 selecoes = st.multiselect("Escolha 3:", ["Maçã", "Cenoura", "Chocolate", "Banana", "Brócolis", "Batata Frita"])
