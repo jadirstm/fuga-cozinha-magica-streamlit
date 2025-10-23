@@ -1,5 +1,6 @@
 import streamlit as st
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
+import os
 
 # ------------------------------
 # Configuração do app
@@ -10,16 +11,17 @@ st.set_page_config(
     layout="wide"
 )
 
+# ------------------------------
 # Inicializa progresso
+# ------------------------------
 if "progresso" not in st.session_state:
     st.session_state.progresso = 0
 
 # ------------------------------
-# CSS para personalização global
+# CSS para personalização
 # ------------------------------
 st.markdown("""
 <style>
-/* Títulos e subtítulos */
 .main-title {
     text-align: center;
     color: #2C6E49;
@@ -31,7 +33,6 @@ st.markdown("""
     color: #FF8C00;
     font-size: 1.3em;
 }
-/* Botões */
 .stButton>button {
     background-color: #FF8C00;
     color: white;
@@ -42,9 +43,7 @@ st.markdown("""
 }
 .stButton>button:hover {
     background-color: #FFA733;
-    color: white;
 }
-/* Sidebar */
 [data-testid="stSidebar"] {
     background-color: #F0FFF0;
     color: #333;
@@ -59,13 +58,22 @@ st.markdown('<p class="main-title">🏰 Escape Room da Nutrição 🥦🍎</p>',
 st.markdown('<p class="subtitle">Ajude o herói a escapar das salas resolvendo enigmas sobre comida saudável!</p>', unsafe_allow_html=True)
 
 # ------------------------------
-# Imagem de introdução
+# Imagem de fundo segura
 # ------------------------------
-try:
-    bg_image = Image.open("assets/background_escape.jpg")
+bg_path = "assets/background_escape.jpg"
+bg_image = None
+if os.path.exists(bg_path):
+    try:
+        img = Image.open(bg_path)
+        img.verify()  # Confirma se é uma imagem válida
+        bg_image = Image.open(bg_path)  # Reabre para exibição
+    except (UnidentifiedImageError, IOError):
+        st.warning("⚠️ A imagem de fundo existe, mas não pôde ser aberta. Reexporte como JPG válido.")
+else:
+    st.warning("⚠️ Imagem de fundo não encontrada em assets/")
+
+if bg_image:
     st.image(bg_image, caption="A aventura começa aqui!", use_container_width=True)
-except FileNotFoundError:
-    st.warning("Imagem de fundo não encontrada. Verifique a pasta assets.")
 
 # ------------------------------
 # Barra de progresso
@@ -73,16 +81,7 @@ except FileNotFoundError:
 st.progress(st.session_state.progresso / 3)
 
 # ------------------------------
-# Navegação pelas salas
-# ------------------------------
-st.sidebar.title("Salas da Aventura")
-st.sidebar.write("Clique em uma sala para navegar:")
-
-# Deixa Streamlit criar menu automático via pages (melhor prática)
-# O menu lateral mostra as páginas automaticamente
-
-# ------------------------------
-# Botão de início
+# Botão iniciar
 # ------------------------------
 if st.session_state.progresso == 0:
     if st.button("🚪 Começar a aventura"):
