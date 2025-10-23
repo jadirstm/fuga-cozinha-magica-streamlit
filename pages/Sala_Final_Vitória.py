@@ -6,7 +6,7 @@ st.write("Aprendeu: Coma variado, beba água, evite excessos!")
 
 try:
     vitoria = Image.open("assets/imagem_vitoria.jpg")
-    st.image(vitoria, caption="Celebração!", use_column_width=True)
+    st.image(vitoria, caption="Celebração!", use_container_width=True)
 except:
     st.write("Imagem de vitória não encontrada.")
 
