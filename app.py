@@ -9,7 +9,7 @@ st.write("Ajude o herói a escapar das salas resolvendo enigmas sobre comida sau
 # Imagem de introdução
 try:
     bg_image = Image.open("assets/background_escape.jpg")
-    st.image(bg_image, caption="Aventura começa aqui!", use_column_width=True)
+    st.image(bg_image, caption="Aventura começa aqui!", use_container_width=True)
 except FileNotFoundError:
     st.write("Imagem de fundo não encontrada.")
 
